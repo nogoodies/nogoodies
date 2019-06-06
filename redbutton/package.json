@@ -1,0 +1,13 @@
+{
+  "name": "redbutton",
+  "version": "0.0.0",
+  "description": "Description for nogoodies",
+  "private": true,
+  "license": "UNLICENSED",
+  "cacheDirectories": [
+    "node_modules"
+  ],
+  "dependencies": {
+    "request": "^2.88.0"
+  }
+}
