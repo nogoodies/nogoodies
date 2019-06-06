@@ -1,0 +1,37 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.sonarsource"
+    },
+    "jhipsterVersion": "6.0.1",
+    "applicationType": "monolith",
+    "baseName": "nogoodies",
+    "packageName": "com.sonarsource",
+    "packageFolder": "com/sonarsource",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "postgresql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "gradle",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "MWM2YmEwMzkzMzAwMzkwMDZjMDY5MjYzMTY3ZjgxZTVjZTgyMDE0OWM0ZGNkMzA0MDM2MmZjOGRiNWZmOThmYTQwYWJmZjk0YmYxZTVmYTI1NDQxNzA0OTBhZGQzNTY5NTk2MmVjN2VmMjQ2MDcwOTE2MDdhNWRhNzEwYTk5Yzk=",
+    "clientFramework": "react",
+    "clientTheme": "flatly",
+    "clientThemeVariant": "primary",
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false
+  }
+}
