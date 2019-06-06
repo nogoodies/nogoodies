@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# only deploy from master
+git checkout master
+
 REVISION=`git rev-parse HEAD`
 ./gradlew build -Pprod bootjar
 
@@ -10,11 +13,14 @@ fi
 
 JAR="nogoodies.jar" 
 jar=`ls build/libs/nogoodies-*.jar | head -1`
-cp -f "$jar" $JAR
+cp -f "$jar" $JAR.$REVISION
 
 CLEVER_BRANCH="clever_deploy"
-git checkout $CLEVER_BRANCH
+if git checkout $CLEVER_BRANCH; then
+  mv $JAR.$REVISION $JAR
+  git add $JAR
+  git commit -m "deployment of $REVISION"
+  git push --set-upstream clever $CLEVER_BRANCH:master
 
-git add $JAR
-git commit -m "deployment of $REVISION"
-git push --set-upstream clever $CLEVER_BRANCH:master
+  git checkout master
+fi
