@@ -20,20 +20,15 @@ setupAxiosInterceptors(() => actions.clearAuthentication('login.error.unauthoriz
 
 loadIcons();
 
-const rootEl = document.getElementById('root');
-
-const render = Component =>
-  ReactDOM.render(
-    <ErrorBoundary>
-      <Provider store={store}>
-        <div>
-          {/* If this slows down the app in dev disable it and enable when required  */}
-          {devTools}
-          <Component />
-        </div>
-      </Provider>
-    </ErrorBoundary>,
-    rootEl
-  );
-
-render(AppComponent);
+ReactDOM.render(
+  <ErrorBoundary>
+    <Provider store={store}>
+      <div>
+        {/* If this slows down the app in dev disable it and enable when required  */}
+        {devTools}
+        <AppComponent />
+      </div>
+    </Provider>
+  </ErrorBoundary>,
+  document.getElementById('root')
+);
