@@ -9,6 +9,8 @@ import twitter4j.conf.ConfigurationBuilder;
 
 import javax.annotation.PostConstruct;
 import java.time.ZonedDateTime;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 
 @Component
@@ -38,13 +40,16 @@ public class TwitterService {
         StatusListener listener = new StatusListener() {
             @Override
             public void onStatus(Status status) {
-                log.info("@" + status.getUser().getScreenName() + " - " + status.getText());
+                String text = status.getText();
+                text = text != null && text.length() > 255 ? text.substring(0,254) : text;
+                log.info("@" + status.getUser().getScreenName() + " - " + text);
                 Event event = new Event();
                 event.setTime(ZonedDateTime.now());
                 event.setOrigin("twitter");
                 event.setUser(status.getUser().getScreenName());
                 event.setUserId(String.valueOf(status.getUser().getId()));
-                event.setTweetText(status.getText());
+                event.setTweetText(text);
+                event.setTweetId(String.valueOf(status.getId()));
                 eventService.save(event);
             }
 

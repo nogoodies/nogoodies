@@ -28,6 +28,10 @@
         {
             "fieldName": "tweetText",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "tweetId",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20190606122704",

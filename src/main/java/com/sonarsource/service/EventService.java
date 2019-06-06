@@ -83,4 +83,8 @@ public class EventService {
         log.debug("Request to delete Event : {}", id);
         eventRepository.deleteById(id);
     }
+
+    public List<Event> findByOriginOrderByTimeDesc(String origin) {
+        return eventRepository.findByOriginOrderByTimeDesc(origin);
+    }
 }

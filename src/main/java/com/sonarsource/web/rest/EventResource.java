@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
@@ -84,6 +83,17 @@ public class EventResource {
         return ResponseEntity.created(new URI("/api/events/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
+    }
+
+    /**
+     * {@code GET  /tweets} : get all the tweets.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of events in body.
+     */
+    @GetMapping("/tweets")
+    public ResponseEntity<List<Event>> tweets() {
+        List<Event> tweets = eventService.findByOriginOrderByTimeDesc("twitter");
+        return ResponseEntity.ok(tweets);
     }
 
     /**

@@ -134,6 +134,12 @@ export class EventUpdate extends React.Component<IEventUpdateProps, IEventUpdate
                   </Label>
                   <AvField id="event-tweetText" type="text" name="tweetText" />
                 </AvGroup>
+                <AvGroup>
+                  <Label id="tweetIdLabel" for="event-tweetId">
+                    Tweet Id
+                  </Label>
+                  <AvField id="event-tweetId" type="text" name="tweetId" />
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/event" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;

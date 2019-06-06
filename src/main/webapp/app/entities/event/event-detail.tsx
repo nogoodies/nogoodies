@@ -50,6 +50,10 @@ export class EventDetail extends React.Component<IEventDetailProps> {
               <span id="tweetText">Tweet Text</span>
             </dt>
             <dd>{eventEntity.tweetText}</dd>
+            <dt>
+              <span id="tweetId">Tweet Id</span>
+            </dt>
+            <dd>{eventEntity.tweetId}</dd>
           </dl>
           <Button tag={Link} to="/entity/event" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

@@ -7,6 +7,7 @@ export interface IEvent {
   origin?: string;
   userId?: string;
   tweetText?: string;
+  tweetId?: string;
 }
 
 export const defaultValue: Readonly<IEvent> = {};
