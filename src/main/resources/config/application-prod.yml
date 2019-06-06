@@ -39,7 +39,7 @@ spring:
     hikari:
       poolName: Hikari
       auto-commit: false
-      maximumPoolSize: 5
+      maximumPoolSize: 2
   jpa:
     database-platform: io.github.jhipster.domain.util.FixedPostgreSQL95Dialect
     database: POSTGRESQL

@@ -1,30 +1,14 @@
 import React from 'react';
-
-import { NavItem, NavLink, NavbarBrand } from 'reactstrap';
+import { NavbarBrand } from 'reactstrap';
 import { NavLink as Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDumpsterFire } from '@fortawesome/free-solid-svg-icons';
 
-import appConfig from 'app/config/constants';
-
-export const BrandIcon = props => (
-  <div {...props} className="brand-icon">
-    <img src="content/images/logo-jhipster.png" alt="Logo" />
-  </div>
-);
-
-export const Brand = props => (
-  <NavbarBrand tag={Link} to="/" className="brand-logo">
-    <BrandIcon />
-    <span className="brand-title">Nogoodies</span>
-    <span className="navbar-version">{appConfig.VERSION}</span>
-  </NavbarBrand>
-);
-
-export const Home = props => (
-  <NavItem>
-    <NavLink tag={Link} to="/" className="d-flex align-items-center">
-      <FontAwesomeIcon icon="home" />
-      <span>Home</span>
-    </NavLink>
-  </NavItem>
-);
+export function Brand() {
+  return (
+    <NavbarBrand tag={Link} to="/" className="brand-logo">
+      <FontAwesomeIcon className="brand-icon" icon={faDumpsterFire} size="lg" />
+      <span className="brand-title">No Goodies</span>
+    </NavbarBrand>
+  );
+}
