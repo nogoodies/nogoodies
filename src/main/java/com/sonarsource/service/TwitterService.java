@@ -1,12 +1,23 @@
 package com.sonarsource.service;
 
 import com.sonarsource.domain.Event;
+import java.time.ZonedDateTime;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
+import javax.annotation.PostConstruct;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import twitter4j.*;
+import twitter4j.FilterQuery;
+import twitter4j.HashtagEntity;
+import twitter4j.StallWarning;
+import twitter4j.Status;
+import twitter4j.StatusDeletionNotice;
+import twitter4j.StatusListener;
+import twitter4j.TwitterStream;
+import twitter4j.TwitterStreamFactory;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
-
 import javax.annotation.PostConstruct;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
@@ -16,6 +27,7 @@ import java.util.stream.Stream;
 @Component
 public class TwitterService {
 
+    private static final String[] HASH_TAGS = {"sonarsource", "nogoodies", "shipit"};
     private final org.slf4j.Logger log = LoggerFactory.getLogger(TwitterService.class);
 
     private final EventService eventService;
@@ -40,9 +52,19 @@ public class TwitterService {
         StatusListener listener = new StatusListener() {
             @Override
             public void onStatus(Status status) {
+
                 String text = status.getText();
                 text = text != null && text.length() > 255 ? text.substring(0,254) : text;
-                log.info("@" + status.getUser().getScreenName() + " - " + text);
+
+                Set<String> hashtags = Arrays.stream(status.getHashtagEntities())
+                    .map(HashtagEntity::getText)
+                    .collect(Collectors.toSet());
+                boolean hasAllHashtags = hashtags.stream().filter(t -> Arrays.stream(HASH_TAGS).anyMatch(u -> u.equalsIgnoreCase(t))).count() < 3;
+                log.info("@" + status.getUser().getScreenName() + " - " + status.getText() + " - " + hasAllHashtags + " - " + status.isRetweet());
+                if (status.isRetweet() || !hasAllHashtags) {
+                    return;
+                }
+
                 Event event = new Event();
                 event.setTime(ZonedDateTime.now());
                 event.setOrigin("twitter");
@@ -82,14 +104,11 @@ public class TwitterService {
         twitterStream.addListener(listener);
 
         FilterQuery tweetFilterQuery = new FilterQuery();
-        //tweetFilterQuery.language("fr");
-        //tweetFilterQuery.track(new String[]{"sonarsource", "nogoodies", "climatechange"}); // OR on keywords
+        tweetFilterQuery.track(Arrays.stream(HASH_TAGS).map(t -> "#" + t).toArray(String[]::new));
         twitterStream.filter(tweetFilterQuery);
-        tweetFilterQuery.track(new String[]{"#sonarsource", "#nogoodies", "#shipit", "#climatechange"});
 
         //twitterStream.sample();
         log.info("TwitterService listener starteeeeeeeeeeeed !");
-
 
 
     }
