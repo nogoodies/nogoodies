@@ -43,6 +43,7 @@ public class CacheConfiguration {
             createCache(cm, com.sonarsource.domain.User.class.getName());
             createCache(cm, com.sonarsource.domain.Authority.class.getName());
             createCache(cm, com.sonarsource.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.sonarsource.domain.Event.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }
