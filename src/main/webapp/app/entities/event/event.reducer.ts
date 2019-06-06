@@ -101,11 +101,11 @@ const apiUrl = 'api/events';
 
 // Actions
 
-export const getEntities: ICrudGetAllAction<IEvent> = (page, size, sort) => {
+export const getEntities: ICrudGetAllAction<IEvent[]> = (page, size, sort) => {
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
   return {
     type: ACTION_TYPES.FETCH_EVENT_LIST,
-    payload: axios.get<IEvent>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
+    payload: axios.get<IEvent[]>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
   };
 };
 
