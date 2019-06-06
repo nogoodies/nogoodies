@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -48,6 +49,17 @@ public class EventService {
     public Page<Event> findAll(Pageable pageable) {
         log.debug("Request to get all Events");
         return eventRepository.findAll(pageable);
+    }
+
+    /**
+     * Get all the events.
+     *
+      @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public List<Event> findAll() {
+        log.debug("Request to get all Events");
+        return eventRepository.findAll();
     }
 
 

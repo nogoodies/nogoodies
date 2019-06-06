@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
@@ -33,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**
- * REST controller for managing {@link Score}.
+ * REST controller for managing {@link ScoreDTO}.
  */
 @RestController
 @RequestMapping("/api")
@@ -60,12 +61,14 @@ public class ScoreResource {
     @GetMapping("/score")
     public ResponseEntity<ScoreDTO> getScore() {
 
+        List<Event> events = eventService.findAll();
+
         ScoreDTO score = new ScoreDTO();
-        score.setAmountEuroGiven(45.23);
+        score.setAmountEuroGiven(events.size()*4.5);
         score.setCharityOrganization("banana Inc.");
-        score.setCo2Saved(300L);
+        score.setCo2Saved(Long.valueOf(events.size()*3));
         score.setConfName("SonarSource SHIP IT!");
-        score.setGoodiesNotTaken(45000L);
+        score.setGoodiesNotTaken(Long.valueOf(events.size()));
 
         return ResponseEntity.ok(score);
     }
