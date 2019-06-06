@@ -18,10 +18,6 @@ import twitter4j.TwitterStream;
 import twitter4j.TwitterStreamFactory;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
-import javax.annotation.PostConstruct;
-import java.time.ZonedDateTime;
-import java.util.Arrays;
-import java.util.stream.Stream;
 
 
 @Component
@@ -59,7 +55,7 @@ public class TwitterService {
                 Set<String> hashtags = Arrays.stream(status.getHashtagEntities())
                     .map(HashtagEntity::getText)
                     .collect(Collectors.toSet());
-                boolean hasAllHashtags = hashtags.stream().filter(t -> Arrays.stream(HASH_TAGS).anyMatch(u -> u.equalsIgnoreCase(t))).count() < 3;
+                boolean hasAllHashtags = hashtags.stream().filter(t -> Arrays.stream(HASH_TAGS).anyMatch(u -> u.equalsIgnoreCase(t))).count() == 3;
                 log.info("@" + status.getUser().getScreenName() + " - " + status.getText() + " - " + hasAllHashtags + " - " + status.isRetweet());
                 if (status.isRetweet() || !hasAllHashtags) {
                     return;
