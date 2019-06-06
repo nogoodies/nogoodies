@@ -8,3 +8,29 @@ Main page styles
   background: url('../../../static/images/jhipster_family_member_3.svg') no-repeat center top;
   background-size: contain;
 }
+
+.main-figures {
+  margin-top: 3rem;
+  font-size: 1.5em;
+
+  &__loading {
+    margin: 2em auto;
+  }
+
+  &__title {
+    font-size: 0.9em;
+  }
+
+  &__details {
+    font-size: 0.8em;
+  }
+}
+
+.amount {
+  font-weight: bold;
+  margin-right: 0.5em;
+}
+
+.amount--big {
+  font-size: 2em;
+}

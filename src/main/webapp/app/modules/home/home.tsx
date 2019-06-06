@@ -1,110 +1,100 @@
+import React from 'react';
+import { Card, CardBody, CardHeader, Col, Container, Row, Spinner } from 'reactstrap';
 import './home.scss';
 
-import React from 'react';
-import { Link } from 'react-router-dom';
+interface IState {
+  co2Saved?: number;
+  loading: boolean;
+  plasticSaved?: number;
+  totalMoney?: number;
+}
 
-import { connect } from 'react-redux';
-import { Row, Col, Alert } from 'reactstrap';
+export default class Home extends React.Component<{}, IState> {
+  mounted = false;
+  timer: NodeJS.Timeout;
+  state: IState = { loading: true };
 
-import { IRootState } from 'app/shared/reducers';
-import { getSession } from 'app/shared/reducers/authentication';
-
-export interface IHomeProp extends StateProps, DispatchProps {}
-
-export class Home extends React.Component<IHomeProp> {
   componentDidMount() {
-    this.props.getSession();
+    this.mounted = true;
+    this.fetchData();
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+    if (this.timer) {
+      clearTimeout(this.timer);
+    }
+  }
+
+  fetchData() {
+    setTimeout(() => {
+      Promise.resolve({
+        totalEur: 100,
+        plastic: 20,
+        co2: 33
+      }).then(payload => {
+        this.setState({
+          co2Saved: payload.co2,
+          loading: false,
+          plasticSaved: payload.plastic,
+          totalMoney: payload.totalEur
+        });
+
+        this.timer = setTimeout(this.fetchData, 5000);
+      });
+    }, 2000);
   }
 
   render() {
-    const { account } = this.props;
+    const { co2Saved, loading, plasticSaved, totalMoney } = this.state;
+
     return (
-      <Row>
-        <Col md="9">
-          <h2>Welcome, Java Hipster!</h2>
-          <p className="lead">This is your homepage</p>
-          {account && account.login ? (
-            <div>
-              <Alert color="success">You are logged in as user {account.login}.</Alert>
-            </div>
-          ) : (
-            <div>
-              <Alert color="warning">
-                If you want to
-                <Link to="/login" className="alert-link">
-                  {' '}
-                  sign in
-                </Link>
-                , you can try the default accounts:
-                <br />- Administrator (login=&quot;admin&quot; and password=&quot;admin&quot;)
-                <br />- User (login=&quot;user&quot; and password=&quot;user&quot;).
-              </Alert>
-
-              <Alert color="warning">
-                You do not have an account yet?&nbsp;
-                <Link to="/register" className="alert-link">
-                  Register a new account
-                </Link>
-              </Alert>
-            </div>
-          )}
-          <p>If you have any question on JHipster:</p>
-
-          <ul>
-            <li>
-              <a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer">
-                JHipster homepage
-              </a>
-            </li>
-            <li>
-              <a href="http://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener noreferrer">
-                JHipster on Stack Overflow
-              </a>
-            </li>
-            <li>
-              <a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener noreferrer">
-                JHipster bug tracker
-              </a>
-            </li>
-            <li>
-              <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">
-                JHipster public chat room
-              </a>
-            </li>
-            <li>
-              <a href="https://twitter.com/java_hipster" target="_blank" rel="noopener noreferrer">
-                follow @java_hipster on Twitter
-              </a>
-            </li>
-          </ul>
-
-          <p>
-            If you like JHipster, do not forget to give us a star on{' '}
-            <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">
-              Github
-            </a>
-            !
-          </p>
-        </Col>
-        <Col md="3" className="pad">
-          <span className="hipster rounded" />
-        </Col>
-      </Row>
+      <>
+        <Row>
+          <Col sm="12" md={{ size: 4, offset: 4 }}>
+            <Card className="main-figures">
+              {loading ? (
+                <Spinner className="main-figures__loading" color="success" />
+              ) : (
+                <>
+                  <CardHeader>
+                    <h2 className="main-figures__title">Saved so far!</h2>
+                  </CardHeader>
+                  <CardBody>
+                    <Row>
+                      <Col md="5">
+                        <div className="amount amount--big">
+                          {totalMoney} <span>€</span>
+                        </div>
+                        <div>collected so far</div>
+                      </Col>
+                      <Col>
+                        <Container className="main-figures__details">
+                          <Row>
+                            <Col>
+                              <span className="amount">{co2Saved}</span>Kg of CO<sup>2</sup>
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col>
+                              <span className="amount">{plasticSaved}</span>Kg of plastic
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col>
+                              <span className="amount">0</span>Baby whales choked to death
+                            </Col>
+                          </Row>
+                        </Container>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                </>
+              )}
+            </Card>
+          </Col>
+        </Row>
+      </>
     );
   }
 }
-
-const mapStateToProps = storeState => ({
-  account: storeState.authentication.account,
-  isAuthenticated: storeState.authentication.isAuthenticated
-});
-
-const mapDispatchToProps = { getSession };
-
-type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Home);
