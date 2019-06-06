@@ -37,6 +37,12 @@ public class Event implements Serializable {
     @Column(name = "origin", nullable = false)
     private String origin;
 
+    @Column(name = "user_id")
+    private String userId;
+
+    @Column(name = "tweet_text")
+    private String tweetText;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -84,6 +90,32 @@ public class Event implements Serializable {
     public void setOrigin(String origin) {
         this.origin = origin;
     }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public Event userId(String userId) {
+        this.userId = userId;
+        return this;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getTweetText() {
+        return tweetText;
+    }
+
+    public Event tweetText(String tweetText) {
+        this.tweetText = tweetText;
+        return this;
+    }
+
+    public void setTweetText(String tweetText) {
+        this.tweetText = tweetText != null && tweetText.length() > 255 ? tweetText.substring(0,255) : tweetText;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -109,6 +141,8 @@ public class Event implements Serializable {
             ", time='" + getTime() + "'" +
             ", user='" + getUser() + "'" +
             ", origin='" + getOrigin() + "'" +
+            ", userId='" + getUserId() + "'" +
+            ", tweetText='" + getTweetText() + "'" +
             "}";
     }
 }

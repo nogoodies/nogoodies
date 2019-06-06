@@ -54,11 +54,10 @@ public class EventService {
     /**
      * Get all the events.
      *
-      @return the list of entities.
+     * @return the list of entities.
      */
     @Transactional(readOnly = true)
     public List<Event> findAll() {
-        log.debug("Request to get all Events");
         return eventRepository.findAll();
     }
 

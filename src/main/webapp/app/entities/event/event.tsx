@@ -75,6 +75,12 @@ export class Event extends React.Component<IEventProps, IEventState> {
                 <th className="hand" onClick={this.sort('origin')}>
                   Origin <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={this.sort('userId')}>
+                  User Id <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('tweetText')}>
+                  Tweet Text <FontAwesomeIcon icon="sort" />
+                </th>
                 <th />
               </tr>
             </thead>
@@ -91,6 +97,8 @@ export class Event extends React.Component<IEventProps, IEventState> {
                   </td>
                   <td>{event.user}</td>
                   <td>{event.origin}</td>
+                  <td>{event.userId}</td>
+                  <td>{event.tweetText}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${event.id}`} color="info" size="sm">

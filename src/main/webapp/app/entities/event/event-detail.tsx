@@ -42,6 +42,14 @@ export class EventDetail extends React.Component<IEventDetailProps> {
               <span id="origin">Origin</span>
             </dt>
             <dd>{eventEntity.origin}</dd>
+            <dt>
+              <span id="userId">User Id</span>
+            </dt>
+            <dd>{eventEntity.userId}</dd>
+            <dt>
+              <span id="tweetText">Tweet Text</span>
+            </dt>
+            <dd>{eventEntity.tweetText}</dd>
           </dl>
           <Button tag={Link} to="/entity/event" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

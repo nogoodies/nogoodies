@@ -48,6 +48,12 @@ public class EventResourceIT {
     private static final String DEFAULT_ORIGIN = "AAAAAAAAAA";
     private static final String UPDATED_ORIGIN = "BBBBBBBBBB";
 
+    private static final String DEFAULT_USER_ID = "AAAAAAAAAA";
+    private static final String UPDATED_USER_ID = "BBBBBBBBBB";
+
+    private static final String DEFAULT_TWEET_TEXT = "AAAAAAAAAA";
+    private static final String UPDATED_TWEET_TEXT = "BBBBBBBBBB";
+
     @Autowired
     private EventRepository eventRepository;
 
@@ -95,7 +101,9 @@ public class EventResourceIT {
         Event event = new Event()
             .time(DEFAULT_TIME)
             .user(DEFAULT_USER)
-            .origin(DEFAULT_ORIGIN);
+            .origin(DEFAULT_ORIGIN)
+            .userId(DEFAULT_USER_ID)
+            .tweetText(DEFAULT_TWEET_TEXT);
         return event;
     }
     /**
@@ -108,7 +116,9 @@ public class EventResourceIT {
         Event event = new Event()
             .time(UPDATED_TIME)
             .user(UPDATED_USER)
-            .origin(UPDATED_ORIGIN);
+            .origin(UPDATED_ORIGIN)
+            .userId(UPDATED_USER_ID)
+            .tweetText(UPDATED_TWEET_TEXT);
         return event;
     }
 
@@ -135,6 +145,8 @@ public class EventResourceIT {
         assertThat(testEvent.getTime()).isEqualTo(DEFAULT_TIME);
         assertThat(testEvent.getUser()).isEqualTo(DEFAULT_USER);
         assertThat(testEvent.getOrigin()).isEqualTo(DEFAULT_ORIGIN);
+        assertThat(testEvent.getUserId()).isEqualTo(DEFAULT_USER_ID);
+        assertThat(testEvent.getTweetText()).isEqualTo(DEFAULT_TWEET_TEXT);
     }
 
     @Test
@@ -206,7 +218,9 @@ public class EventResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(event.getId().intValue())))
             .andExpect(jsonPath("$.[*].time").value(hasItem(sameInstant(DEFAULT_TIME))))
             .andExpect(jsonPath("$.[*].user").value(hasItem(DEFAULT_USER.toString())))
-            .andExpect(jsonPath("$.[*].origin").value(hasItem(DEFAULT_ORIGIN.toString())));
+            .andExpect(jsonPath("$.[*].origin").value(hasItem(DEFAULT_ORIGIN.toString())))
+            .andExpect(jsonPath("$.[*].userId").value(hasItem(DEFAULT_USER_ID.toString())))
+            .andExpect(jsonPath("$.[*].tweetText").value(hasItem(DEFAULT_TWEET_TEXT.toString())));
     }
     
     @Test
@@ -222,7 +236,9 @@ public class EventResourceIT {
             .andExpect(jsonPath("$.id").value(event.getId().intValue()))
             .andExpect(jsonPath("$.time").value(sameInstant(DEFAULT_TIME)))
             .andExpect(jsonPath("$.user").value(DEFAULT_USER.toString()))
-            .andExpect(jsonPath("$.origin").value(DEFAULT_ORIGIN.toString()));
+            .andExpect(jsonPath("$.origin").value(DEFAULT_ORIGIN.toString()))
+            .andExpect(jsonPath("$.userId").value(DEFAULT_USER_ID.toString()))
+            .andExpect(jsonPath("$.tweetText").value(DEFAULT_TWEET_TEXT.toString()));
     }
 
     @Test
@@ -248,7 +264,9 @@ public class EventResourceIT {
         updatedEvent
             .time(UPDATED_TIME)
             .user(UPDATED_USER)
-            .origin(UPDATED_ORIGIN);
+            .origin(UPDATED_ORIGIN)
+            .userId(UPDATED_USER_ID)
+            .tweetText(UPDATED_TWEET_TEXT);
 
         restEventMockMvc.perform(put("/api/events")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -262,6 +280,8 @@ public class EventResourceIT {
         assertThat(testEvent.getTime()).isEqualTo(UPDATED_TIME);
         assertThat(testEvent.getUser()).isEqualTo(UPDATED_USER);
         assertThat(testEvent.getOrigin()).isEqualTo(UPDATED_ORIGIN);
+        assertThat(testEvent.getUserId()).isEqualTo(UPDATED_USER_ID);
+        assertThat(testEvent.getTweetText()).isEqualTo(UPDATED_TWEET_TEXT);
     }
 
     @Test

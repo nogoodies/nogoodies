@@ -20,6 +20,14 @@
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "userId",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "tweetText",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20190606122704",
