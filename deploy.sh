@@ -4,7 +4,9 @@
 git checkout master
 
 REVISION=`git rev-parse HEAD`
-./gradlew build -Pprod bootjar
+if ! (export TWITTER_STREAM_CONSUMER_KEY=foo TWITTER_STREAM_CONSUMER_SECRET=bar TWITTER_STREAM_ACCESS_TOKEN=ACME TWITTER_STREAM_TOKEN_SECRET=donut && ./gradlew build -Pprod bootjar); then
+  exit 1
+fi
 
 CLEVER_REMOTE="clever"
 CLEVER_BRANCH="clever_deploy"
