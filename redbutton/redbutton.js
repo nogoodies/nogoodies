@@ -11,8 +11,8 @@ process.stdin.on('keypress', (str, key) => {
     console.log('thanks for your donation!!!!')
 
     request
-      .post('https://pierre.eu.ngrok.io/api/events-tap')
-      .auth(null, null, true, 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTU1OTkxMzM3N30.6Ray2-vkNFad3apLKBWYsxtiaDJEYFc_HMhBxLm867jVWO99VqcDWdZrMeLgzzrTIfisD7AHaLoJSZbAJAB7Lw')
-  } 
+      .post('https://app-46e1c372-b389-43b7-8c0f-ff83ca66f700.cleverapps.io/api/events-tap')
+      .auth(null, null, true, 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTU1OTkxODA2M30.FQ5pbnHsEASUFM0yUo4Fa-kgMtB0A-sbT5qbk43nk9mIrUna0Q_p9yaudhaa2k4TS3jtqIhi75Ev4OR0TSomJg')
+  }
 });
-console.log('Press any key...');          
+console.log('Press any key...');
