@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import twitter4j.FilterQuery;
 import twitter4j.HashtagEntity;
@@ -23,6 +24,19 @@ import twitter4j.conf.ConfigurationBuilder;
 @Component
 public class TwitterService {
 
+    @Value( "${TWITTER_STREAM_CONSUMER_KEY}" )
+    private String TWITTER_STREAM_CONSUMER_KEY;
+
+    @Value( "${TWITTER_STREAM_CONSUMER_SECRET}" )
+    private String TWITTER_STREAM_CONSUMER_SECRET;
+
+    @Value( "${TWITTER_STREAM_ACCESS_TOKEN}" )
+    private String TWITTER_STREAM_ACCESS_TOKEN;
+
+    @Value( "${TWITTER_STREAM_TOKEN_SECRET}" )
+    private String TWITTER_STREAM_TOKEN_SECRET;
+
+
     private static final String[] HASH_TAGS = {"sonarsource", "nogoodies", "shipit"};
     private final org.slf4j.Logger log = LoggerFactory.getLogger(TwitterService.class);
 
@@ -37,10 +51,10 @@ public class TwitterService {
 
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true)
-            .setOAuthConsumerKey("o3DQRmk17Me4iX1ju6exHCOg1")
-            .setOAuthConsumerSecret("OHD7t0HuZVhnkECDzbUcoshKpP489JK7pXDaGi7WTcU6w77NyP")
-            .setOAuthAccessToken("1136654881849298944-l6MmHR50KSs28hoVvP19JjqFJX4CF8")
-            .setOAuthAccessTokenSecret("ovUyVhvuneVphU6LG3Ung10wg845wuiWjW9VwTlHDqmvR");
+            .setOAuthConsumerKey(TWITTER_STREAM_CONSUMER_KEY)
+            .setOAuthConsumerSecret(TWITTER_STREAM_CONSUMER_SECRET)
+            .setOAuthAccessToken(TWITTER_STREAM_ACCESS_TOKEN)
+            .setOAuthAccessTokenSecret(TWITTER_STREAM_TOKEN_SECRET);
         Configuration conf = cb.build();
 
         TwitterStream twitterStream = new TwitterStreamFactory(conf).getInstance();
@@ -55,7 +69,7 @@ public class TwitterService {
                 Set<String> hashtags = Arrays.stream(status.getHashtagEntities())
                     .map(HashtagEntity::getText)
                     .collect(Collectors.toSet());
-                boolean hasAllHashtags = hashtags.stream().filter(t -> Arrays.stream(HASH_TAGS).anyMatch(u -> u.equalsIgnoreCase(t))).count() == 3;
+                boolean hasAllHashtags = hashtags.stream().filter(t -> Arrays.stream(HASH_TAGS).anyMatch(u -> u.equalsIgnoreCase(t))).count() == HASH_TAGS.length;
                 log.info("@" + status.getUser().getScreenName() + " - " + status.getText() + " - " + hasAllHashtags + " - " + status.isRetweet());
                 if (status.isRetweet() || !hasAllHashtags) {
                     return;
