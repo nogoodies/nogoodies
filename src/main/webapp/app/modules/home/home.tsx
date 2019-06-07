@@ -73,7 +73,7 @@ export default class Home extends React.Component<{}, IState> {
               ) : (
                 <>
                   <CardHeader>
-                    <h2 className="main-figures__title">{amountGoodies} teeshirts not given so far!</h2>
+                    <h2 className="main-figures__title">{amountGoodies} t-shirts not given so far!</h2>
                   </CardHeader>
                   <CardBody>
                     <Row>
