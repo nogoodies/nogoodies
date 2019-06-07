@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardBody, CardHeader, Col, Container, Jumbotron, Row, Spinner } from 'reactstrap';
-import { fetchScore } from '../../shared/util/api-utils';
+import { fetchScore, fetchTweets, ITweetsPayload } from '../../shared/util/api-utils';
+import { TwitterTweetEmbed } from 'react-twitter-embed';
 import './home.scss';
 
 interface IState {
@@ -11,12 +12,13 @@ interface IState {
   waterSaved?: number;
   electricitySaved?: number;
   totalMoney?: number;
+  tweets?: ITweetsPayload;
 }
 
 export default class Home extends React.Component<{}, IState> {
   mounted = false;
   timer: NodeJS.Timeout;
-  state: IState = { loading: true };
+  state: IState = { loading: true, tweets: [] };
 
   componentDidMount() {
     this.mounted = true;
@@ -43,13 +45,23 @@ export default class Home extends React.Component<{}, IState> {
           totalMoney: payload.amountEuroGiven
         });
 
-        this.timer = setTimeout(this.fetchData, 5000);
+        this.timer = setTimeout(this.fetchData, 1000);
+      })
+      .catch(console.error);
+
+    fetchTweets()
+      .then(payload => {
+        this.setState({
+          tweets: payload
+        });
       })
       .catch(console.error);
   };
 
   render() {
     const { amountGoodies, co2Saved, loading, plasticSaved, waterSaved, electricitySaved, totalMoney } = this.state;
+
+    const tweets = this.state.tweets.map(item => <TwitterTweetEmbed tweetId={item.tweetId} key={item.tweetId} className="col-sm-3" />);
 
     return (
       <Container>
@@ -106,6 +118,7 @@ export default class Home extends React.Component<{}, IState> {
           </Col>
         </Row>
 
+        <Row>{tweets}</Row>
         <Jumbotron className="what">
           <h1 className="display-4">Goodies no more!</h1>
           <p className="lead">
