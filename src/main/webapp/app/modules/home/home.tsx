@@ -8,6 +8,8 @@ interface IState {
   co2Saved?: number;
   loading: boolean;
   plasticSaved?: number;
+  waterSaved?: number;
+  electricitySaved?: number;
   totalMoney?: number;
 }
 
@@ -36,6 +38,8 @@ export default class Home extends React.Component<{}, IState> {
           co2Saved: payload.co2Saved,
           loading: false,
           plasticSaved: Math.round(Math.random() * 10),
+          waterSaved: Math.round(Math.random() * 10),
+          electricitySaved: Math.round(Math.random() * 10),
           totalMoney: payload.amountEuroGiven
         });
 
@@ -45,7 +49,7 @@ export default class Home extends React.Component<{}, IState> {
   };
 
   render() {
-    const { amountGoodies, co2Saved, loading, plasticSaved, totalMoney } = this.state;
+    const { amountGoodies, co2Saved, loading, plasticSaved, waterSaved, electricitySaved, totalMoney } = this.state;
 
     return (
       <Container>
@@ -57,7 +61,7 @@ export default class Home extends React.Component<{}, IState> {
               ) : (
                 <>
                   <CardHeader>
-                    <h2 className="main-figures__title">{amountGoodies} goodies not given so far!</h2>
+                    <h2 className="main-figures__title">{amountGoodies} teeshirts not given so far!</h2>
                   </CardHeader>
                   <CardBody>
                     <Row>
@@ -76,6 +80,16 @@ export default class Home extends React.Component<{}, IState> {
                         <Row>
                           <Col>
                             <span className="amount">{plasticSaved}</span>Kg of plastic
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col>
+                            <span className="amount">{waterSaved}</span>L of water
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col>
+                            <span className="amount">{electricitySaved}</span>kWh of energy
                           </Col>
                         </Row>
                         <Row>
