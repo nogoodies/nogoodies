@@ -29,6 +29,7 @@
     "react-router-dom": "5.0.0",
     "react-toastify": "4.5.2",
     "react-transition-group": "2.7.0",
+    "react-twitter-embed": "^2.0.8",
     "reactstrap": "7.1.0",
     "redux": "4.0.1",
     "redux-devtools": "3.5.0",
