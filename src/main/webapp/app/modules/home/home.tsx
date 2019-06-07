@@ -37,11 +37,11 @@ export default class Home extends React.Component<{}, IState> {
       .then(payload => {
         this.setState({
           amountGoodies: payload.goodiesNotTaken,
-          co2Saved: payload.co2Saved,
+          co2Saved: Math.floor(payload.co2Saved * 2.89),
           loading: false,
-          plasticSaved: Math.round(Math.random() * 10),
-          waterSaved: Math.round(Math.random() * 10),
-          electricitySaved: Math.round(Math.random() * 10),
+          plasticSaved: Math.floor(payload.goodiesNotTaken * 30),
+          waterSaved: Math.floor(payload.goodiesNotTaken * 187),
+          electricitySaved: Math.floor(payload.goodiesNotTaken * 8.79),
           totalMoney: payload.amountEuroGiven
         });
 
@@ -91,7 +91,7 @@ export default class Home extends React.Component<{}, IState> {
                         </Row>
                         <Row>
                           <Col>
-                            <span className="amount">{plasticSaved}</span>Kg of plastic
+                            <span className="amount">{plasticSaved}</span>g of plastic
                           </Col>
                         </Row>
                         <Row>
