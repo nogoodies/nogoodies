@@ -3,6 +3,7 @@ package com.sonarsource.service;
 import com.sonarsource.domain.Event;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
@@ -75,6 +76,14 @@ public class TwitterService {
                     return;
                 }
 
+                List<Event> previousTweets = eventService.findByUserId(String.valueOf(status.getUser().getId()));
+                if(previousTweets != null && !previousTweets.isEmpty()){
+                    for (Event previousTweet : previousTweets) {
+                        log.info("previous tweet for this user exist (" + status.getUser().getScreenName() + "). delete the previous tweet and save the new.");
+                        eventService.delete(previousTweet.getId());
+                    }
+                }
+
                 Event event = new Event();
                 event.setTime(ZonedDateTime.now());
                 event.setOrigin("twitter");
@@ -87,7 +96,18 @@ public class TwitterService {
 
             @Override
             public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
-                //System.out.println("Got a status deletion notice id:" + statusDeletionNotice.getStatusId());
+                log.info("Got a status deletion notice. id:" + statusDeletionNotice.getStatusId());
+
+                Event event = eventService.findByTweetId(String.valueOf(statusDeletionNotice.getStatusId()));
+
+                if(event == null){
+                    log.info("Got a status deletion notice, but no tweet found with id:" + statusDeletionNotice.getStatusId());
+                    return; // not my business
+                }
+
+                log.info("Got a status deletion notice AND a saved tweet matching the id. by " + event.getUser() + " / " + statusDeletionNotice.getStatusId());
+                eventService.delete(event.getId());
+
             }
 
             @Override

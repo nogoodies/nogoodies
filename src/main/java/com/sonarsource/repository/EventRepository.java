@@ -15,4 +15,8 @@ import java.util.List;
 public interface EventRepository extends JpaRepository<Event, Long> {
 
     List<Event> findByOriginOrderByTimeDesc(String origin);
+
+    Event findByTweetId(String tweetId);
+
+    List<Event> findByUserId(String userId);
 }

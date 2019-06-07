@@ -87,4 +87,12 @@ public class EventService {
     public List<Event> findByOriginOrderByTimeDesc(String origin) {
         return eventRepository.findByOriginOrderByTimeDesc(origin);
     }
+
+    public Event findByTweetId(String tweetId) {
+        return eventRepository.findByTweetId(tweetId);
+    }
+
+    public List<Event> findByUserId(String userId) {
+        return eventRepository.findByUserId(userId);
+    }
 }

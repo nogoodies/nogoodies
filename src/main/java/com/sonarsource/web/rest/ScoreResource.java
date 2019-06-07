@@ -64,9 +64,9 @@ public class ScoreResource {
         List<Event> events = eventService.findAll();
 
         ScoreDTO score = new ScoreDTO();
-        score.setAmountEuroGiven(events.size()*4.5);
+        score.setAmountEuroGiven(7D * events.size());
         score.setCharityOrganization("banana Inc.");
-        score.setCo2Saved(Long.valueOf(events.size()*3));
+        score.setCo2Saved(Long.valueOf(events.size()));
         score.setConfName("SonarSource SHIP IT!");
         score.setGoodiesNotTaken(Long.valueOf(events.size()));
 
